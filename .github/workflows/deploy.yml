@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Configure Pages base path
+        env:
+          PUBLIC_SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
+        run: |
+          if [[ -n "$PUBLIC_SITE_DOMAIN" ]]; then
+            echo "BASE_PATH=/" >> "$GITHUB_ENV"
+          else
+            site_name="${GITHUB_REPOSITORY#*/}"
+            if [[ "$site_name" == "$GITHUB_REPOSITORY_OWNER.github.io" ]]; then
+              echo "BASE_PATH=/" >> "$GITHUB_ENV"
+            else
+              echo "BASE_PATH=/$site_name/" >> "$GITHUB_ENV"
+            fi
+          fi
+      - name: Prepare custom-domain marker
+        env:
+          PUBLIC_SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
+        run: |
+          if [[ -z "$PUBLIC_SITE_DOMAIN" ]]; then
+            echo "Set the SITE_DOMAIN Actions variable before deploying." >&2
+            exit 1
+          fi
+          printf '%s\n' "$PUBLIC_SITE_DOMAIN" > public/CNAME
+      - name: Build static site
+        env:
+          PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
+          PUBLIC_TELEGRAM_URL: ${{ vars.TELEGRAM_URL }}
+          PUBLIC_LINKEDIN_URL: ${{ vars.LINKEDIN_URL }}
+          PUBLIC_CONTACT_FUNCTION_URL: ${{ vars.CONTACT_FUNCTION_URL }}
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

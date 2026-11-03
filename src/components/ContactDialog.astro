@@ -1,0 +1,98 @@
+---
+import { siteConfig } from '../lib/siteConfig';
+const { locale } = Astro.props;
+const emailFallback = siteConfig.contactEmail
+  ? (locale === 'en' ? `Please email ${siteConfig.contactEmail} for now.` : `Пока напишите на ${siteConfig.contactEmail}.`)
+  : (locale === 'en' ? 'Please try again later.' : 'Попробуйте отправить запрос позже.');
+const copy = locale === 'en'
+  ? {
+      eyebrow: 'LET’S MAKE IT / NEW PROJECT',
+      title: 'Let’s talk about your project.',
+      intro: 'Tell us a little about what you’re building. We’ll get back to you using the contact details you provide.',
+      close: 'Close form',
+      name: 'Your name',
+      email: 'Your email',
+      phone: 'Phone',
+      optional: '(optional)',
+      project: 'What would you like to build or improve?',
+      projectPlaceholder: 'Tell us a little about your project',
+      projectHint: 'A few sentences are enough to get started.',
+      consent: 'I agree to the processing of my personal data so the team can respond to my request.',
+      submit: 'Send a request',
+      sending: 'Sending…',
+      unavailable: `The form is ready, but online submission is not connected yet. ${emailFallback}`,
+      success: 'Thanks — your request has been sent. We’ll be in touch.',
+      error: 'Sorry, we couldn’t send your request because of temporary technical issues affecting upstream services.',
+      alternatives: 'Please contact us another way:',
+      emailContact: 'Email us',
+      telegramContact: 'Message us on Telegram',
+    }
+  : {
+      eyebrow: 'LET’S MAKE IT / НОВЫЙ ПРОЕКТ',
+      title: 'Обсудим ваш проект?',
+      intro: 'Расскажите в двух словах, что нужно сделать. Мы ответим по указанным контактам.',
+      close: 'Закрыть форму',
+      name: 'Ваше имя',
+      email: 'Ваш email',
+      phone: 'Телефон',
+      optional: '(необязательно)',
+      project: 'Что хотите создать или улучшить?',
+      projectPlaceholder: 'Расскажите пару слов о вашем проекте',
+      projectHint: 'Для начала достаточно нескольких предложений.',
+      consent: 'Согласен(на) на обработку персональных данных, чтобы команда могла ответить на мой запрос.',
+      submit: 'Отправить заявку',
+      sending: 'Отправляем…',
+      unavailable: `Форма готова, но онлайн-отправка пока не подключена. ${emailFallback}`,
+      success: 'Спасибо! Заявка отправлена. Мы свяжемся с вами.',
+      error: 'Извините, не удалось отправить заявку из-за временных технических неисправностей магистральных сервисов.',
+      alternatives: 'Пожалуйста, свяжитесь с нами другим способом:',
+      emailContact: 'Написать по email',
+      telegramContact: 'Написать в Telegram',
+    };
+---
+
+<dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-title">
+  <div class="dialog-card">
+    <button class="dialog-close" type="button" data-close-contact aria-label={copy.close}>
+      <span aria-hidden="true">×</span>
+    </button>
+    <div class="dialog-heading">
+      <div class="eyebrow"><span class="status-dot"></span>{copy.eyebrow}</div>
+      <h2 id="contact-dialog-title">{copy.title}</h2>
+      <p>{copy.intro}</p>
+    </div>
+    <form
+      class="lead-form"
+      id="lead-form"
+      data-submit-url={siteConfig.contactFunctionUrl}
+      data-unavailable-message={copy.unavailable}
+      data-sending-message={copy.sending}
+      data-success-message={copy.success}
+      data-error-message={copy.error}
+      data-alternatives-message={copy.alternatives}
+      data-email-contact-label={copy.emailContact}
+      data-telegram-contact-label={copy.telegramContact}
+    >
+      <div class="form-grid">
+        <label>{copy.name}<input name="name" type="text" autocomplete="name" required maxlength="120" /></label>
+        <label><span>{copy.email} <small class="optional-hint" hidden>{copy.optional}</small></span><input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+        <label><span>{copy.phone} <small class="optional-hint" hidden>{copy.optional}</small></span><input name="phone" type="tel" autocomplete="tel" pattern="[+()0-9 .-]{7,40}" required maxlength="40" /></label>
+        <label class="form-full">{copy.project}<textarea name="project" rows="4" required maxlength="4000" placeholder={copy.projectPlaceholder} aria-describedby="project-hint"></textarea><small id="project-hint">{copy.projectHint}</small></label>
+      </div>
+      <label class="consent-row"><input name="consent" type="checkbox" required /><span>{copy.consent}</span></label>
+      <div class="form-actions">
+        <div class="form-feedback">
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <div class="form-alternatives" id="form-alternatives" hidden={!siteConfig.contactEmail && !siteConfig.telegramUrl}>
+            <span>{copy.alternatives}</span>
+            <a href={siteConfig.contactEmail ? `mailto:${siteConfig.contactEmail}` : undefined} hidden={!siteConfig.contactEmail} data-email-contact>{copy.emailContact}</a>
+            <a href={siteConfig.telegramUrl || undefined} hidden={!siteConfig.telegramUrl} target="_blank" rel="noopener noreferrer" data-telegram-contact>{copy.telegramContact}</a>
+          </div>
+        </div>
+        <button class="button button-primary form-submit" type="submit">
+          {copy.submit}<span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>

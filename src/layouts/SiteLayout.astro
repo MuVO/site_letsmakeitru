@@ -1,0 +1,102 @@
+---
+import { siteConfig } from '../lib/siteConfig';
+const { locale, title, description, socialDescription } = Astro.props;
+const isEnglish = locale === 'en';
+const assetPrefix = isEnglish ? '../' : './';
+const ruHref = isEnglish ? '../' : './';
+const enHref = isEnglish ? './' : 'en/';
+const enDescription = 'DevOps, IT outsourcing and backend development for businesses. IT infrastructure support, API development and process automation. Commercial software development since 2005.';
+const ruDescription = 'DevOps, IT-аутсорсинг и backend-разработка для бизнеса. Поддержка IT-инфраструктуры, API и автоматизация процессов. Коммерческая разработка с 2005 года.';
+const services = isEnglish
+  ? [
+      ['DevOps and infrastructure', 'Automation of IT infrastructure delivery and operations.'],
+      ['IT outsourcing and support', 'Technical support and management of business IT environments.'],
+      ['Backend development', 'Backend and API development for digital products.'],
+    ]
+  : [
+      ['DevOps и инфраструктура', 'Автоматизация поставки и эксплуатации IT-инфраструктуры.'],
+      ['IT-аутсорсинг и поддержка', 'Техническая поддержка и сопровождение IT-среды бизнеса.'],
+      ['Backend-разработка', 'Разработка серверной части цифровых продуктов и API.'],
+    ];
+const organization = {
+  '@type': 'Organization',
+  '@id': '#organization',
+  name: "Let's make IT",
+  description: isEnglish
+    ? 'A team specializing in DevOps, IT outsourcing and backend development for businesses. Commercial software development since 2005.'
+    : 'Команда, специализирующаяся на DevOps, IT-аутсорсинге и backend-разработке для бизнеса. Коммерческая разработка с 2005 года.',
+  email: siteConfig.contactEmail || undefined,
+  sameAs: [siteConfig.telegramUrl, siteConfig.linkedinUrl].filter(Boolean),
+  knowsAbout: isEnglish
+    ? ['DevOps', 'IT outsourcing', 'Backend development', 'PHP', 'Laravel', 'Yii2', 'Python', 'MySQL', 'PostgreSQL', 'MongoDB', 'OpenAPI', 'GitLab CI', 'Ansible']
+    : ['DevOps', 'IT-аутсорсинг', 'Backend-разработка', 'PHP', 'Laravel', 'Yii2', 'Python', 'MySQL', 'PostgreSQL', 'MongoDB', 'OpenAPI', 'GitLab CI', 'Ansible'],
+};
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organization,
+    {
+      '@type': 'WebSite',
+      '@id': '#website',
+      name: "Let's make IT",
+      description: isEnglish
+        ? 'DevOps, IT outsourcing and backend development for businesses.'
+        : 'DevOps, IT-аутсорсинг и backend-разработка для бизнеса.',
+      inLanguage: locale,
+      publisher: { '@id': '#organization' },
+    },
+    ...services.map(([name, serviceDescription]) => ({
+      '@type': 'Service',
+      name,
+      description: serviceDescription,
+      provider: { '@id': '#organization' },
+    })),
+  ],
+};
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#101014" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={isEnglish ? 'en_US' : 'ru_RU'} />
+    <meta property="og:site_name" content="Let's make IT" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={socialDescription} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={isEnglish ? enDescription : ruDescription} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={`${assetPrefix}assets/favicon.svg`} />
+    <link rel="alternate" hreflang="ru" href={ruHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={ruHref} />
+    <link rel="stylesheet" href={`${assetPrefix}styles.css`} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    <script is:inline data-locale={locale} data-english-path={locale === 'ru' ? 'en/' : ''}>
+      (() => {
+        const current = document.currentScript;
+        const params = new URLSearchParams(location.search);
+        let choice = params.get('lang');
+        try {
+          if (choice === 'ru' || choice === 'en') localStorage.setItem('letsmakeit-language', choice);
+          else choice = localStorage.getItem('letsmakeit-language');
+        } catch (error) {}
+        const browserLanguage = (navigator.languages?.[0] || navigator.language || '').toLowerCase();
+        const preferred = choice || (browserLanguage.startsWith('en') ? 'en' : 'ru');
+        if (current.dataset.locale === 'ru' && preferred === 'en') {
+          const target = new URL(current.dataset.englishPath, document.baseURI);
+          target.searchParams.set('lang', 'en');
+          location.replace(target.href);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script is:inline src={`${assetPrefix}script.js`}></script>
+  </body>
+</html>
