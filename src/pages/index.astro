@@ -2,6 +2,7 @@
 import { siteConfig } from '../lib/siteConfig';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ContactDialog from '../components/ContactDialog.astro';
+import TechStack from '../components/TechStack.astro';
 const locale = 'ru';
 const title = "DevOps и backend для бизнеса — Let's make IT";
 const description = 'DevOps, IT-аутсорсинг и backend-разработка для бизнеса. Поддержка IT-инфраструктуры, API и автоматизация процессов. Коммерческая разработка с 2005 года.';
@@ -50,21 +51,7 @@ const socialDescription = 'Поддерживаем IT-инфраструкту�
       </div>
     </div></section>
 
-    <section class="techcard-section section" id="techcard"><div class="wrap">
-      <div class="techcard-heading"><div><div class="eyebrow"><span class="section-no">02</span> НАША ТЕХНИЧЕСКАЯ ВИЗИТКА</div><h2>Техническая основа<br><span class="muted">для ваших задач.</span></h2></div><p>Выбираем подходящий стек без лишней сложности — с учётом задач бизнеса и дальнейшего развития продукта.</p></div>
-      <div class="techcard">
-        <div class="techcard-aside"><div class="techcard-brand"><img src="assets/logo.svg" alt=""><span>Let's make IT</span></div><div class="techcard-label">ENGINEERING<br>CAPABILITIES / 2026</div><div class="techcard-mantra">Контракт. Код.<br>Доставка. Надёжность.</div><span class="techcard-coords">54°N / 37°E</span></div>
-        <div class="techcard-main">
-          <div class="tech-item"><span class="tech-index">01</span><div><h3>Backend-разработка</h3><p>Основной стек и опыт команды</p><div class="tech-tags"><span class="primary-tag">PHP</span><span>Laravel</span><span>Yii2</span><span class="soft-tag">Python · опыт</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">02</span><div><h3>JavaScript / Node.js</h3><p>Фреймворки и платформы</p><div class="tech-tags"><span>AdonisJS</span><span>Strapi</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">03</span><div><h3>Serverless</h3><p>Облачные функции</p><div class="tech-tags"><span>Yandex.Cloud</span><span>AWS Lambda</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">04</span><div><h3>Базы данных</h3><p>Подбираем под модель и нагрузку</p><div class="tech-tags"><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">05</span><div><h3>API и контракты</h3><p>Сначала согласуем интерфейс</p><div class="tech-tags"><span class="primary-tag">Contract-first</span><span>OpenAPI</span><span>Swagger</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">06</span><div><h3>Поставка и автоматизация</h3><p>Повторяемые сборки и инфраструктура</p><div class="tech-tags"><span>GitLab</span><span>GitLab CI</span><span>Ansible</span><span>Docker</span></div></div></div>
-        </div>
-        <div class="techcard-footer"><span><i></i> ОТ КОММИТА ДО ПРОДАКШЕНА</span><span>LET'S MAKE IT WORK <b>↗</b></span></div>
-      </div>
-    </div></section>
+    <TechStack locale={locale} />
 
     <section class="approach section" id="approach"><div class="wrap approach-layout"><div class="approach-intro"><div class="eyebrow"><span class="section-no">03</span> КАК МЫ РАБОТАЕМ</div><h2>Понятно бизнесу.<br><span class="accent">Надёжно инженерам.</span></h2><p>Фиксируем цели, этапы и ответственность. Вы понимаете, что делаем и зачем; инженеры — как это поддерживать и развивать.</p><div class="experience-note"><span>Занимаемся коммерческой<br>разработкой</span><b>с 2005 года</b></div></div><div class="steps"><article class="step"><span class="step-no">01</span><div><h3>Согласуем цель</h3><p>Определяем, что должно измениться для бизнеса и по каким признакам поймём, что задача решена.</p></div><span class="step-arrow">↗</span></article><article class="step"><span class="step-no">02</span><div><h3>Показываем путь</h3><p>Разбиваем работу на этапы, согласуем приоритеты и сроки. Объясняем варианты и их последствия простым языком.</p></div><span class="step-arrow">↗</span></article><article class="step"><span class="step-no">03</span><div><h3>Доводим до результата</h3><p>Внедряем решение, документируем его и передаём знания — чтобы система оставалась управляемой и после запуска.</p></div><span class="step-arrow">↗</span></article></div></div></section>
 

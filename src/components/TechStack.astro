@@ -1,0 +1,72 @@
+---
+const { locale } = Astro.props;
+const isEnglish = locale === 'en';
+const copy = isEnglish
+  ? {
+      eyebrow: 'OUR TECHNICAL SNAPSHOT',
+      title: ['The technical foundation', 'for your business.'],
+      intro: 'We choose the right stack without unnecessary complexity, based on business needs and the product’s future growth.',
+      mantra: ['Contract. Code.', 'Delivery. Reliability.'],
+      rows: [
+        ['Backend development', 'Our core stack and team experience', ['PHP', 'Laravel', 'Yii2', 'Python · experience']],
+        ['JavaScript / Node.js', 'Frameworks and platforms', ['AdonisJS', 'Strapi']],
+        ['Serverless', 'Cloud functions', ['Yandex.Cloud', 'AWS Lambda']],
+        ['Databases', 'Chosen for your data and workload', ['MySQL', 'PostgreSQL', 'MongoDB']],
+        ['APIs and contracts', 'Agree on the interface first', ['Contract-first', 'OpenAPI', 'Swagger']],
+        ['Delivery and automation', 'Repeatable builds and infrastructure', ['GitLab', 'GitLab CI', 'Ansible', 'Docker']],
+      ],
+      footer: 'FROM COMMIT TO PRODUCTION',
+    }
+  : {
+      eyebrow: 'НАША ТЕХНИЧЕСКАЯ ВИЗИТКА',
+      title: ['Техническая основа', 'для ваших задач.'],
+      intro: 'Выбираем подходящий стек без лишней сложности — с учётом задач бизнеса и дальнейшего развития продукта.',
+      mantra: ['Контракт. Код.', 'Доставка. Надёжность.'],
+      rows: [
+        ['Backend-разработка', 'Основной стек и опыт команды', ['PHP', 'Laravel', 'Yii2', 'Python · опыт']],
+        ['JavaScript / Node.js', 'Фреймворки и платформы', ['AdonisJS', 'Strapi']],
+        ['Serverless', 'Облачные функции', ['Yandex.Cloud', 'AWS Lambda']],
+        ['Базы данных', 'Подбираем под модель и нагрузку', ['MySQL', 'PostgreSQL', 'MongoDB']],
+        ['API и контракты', 'Сначала согласуем интерфейс', ['Contract-first', 'OpenAPI', 'Swagger']],
+        ['Поставка и автоматизация', 'Повторяемые сборки и инфраструктура', ['GitLab', 'GitLab CI', 'Ansible', 'Docker']],
+      ],
+      footer: 'ОТ КОММИТА ДО ПРОДАКШЕНА',
+    };
+---
+
+<section class="techcard-section section" id="techcard">
+  <div class="wrap">
+    <div class="techcard-heading">
+      <div>
+        <div class="eyebrow"><span class="section-no">02</span> {copy.eyebrow}</div>
+        <h2>{copy.title[0]}<br /><span class="muted">{copy.title[1]}</span></h2>
+      </div>
+      <p>{copy.intro}</p>
+    </div>
+    <div class="techcard">
+      <div class="techcard-aside">
+        <div class="techcard-brand"><img src={isEnglish ? '../assets/logo.svg' : 'assets/logo.svg'} alt="" /><span>Let's make IT</span></div>
+        <div class="techcard-label">ENGINEERING<br />CAPABILITIES / 2026</div>
+        <div class="techcard-mantra">{copy.mantra[0]}<br />{copy.mantra[1]}</div>
+        <span class="techcard-coords">54°N / 37°E</span>
+      </div>
+      <div class="techcard-main">
+        {copy.rows.map(([title, description, tags], index) => (
+          <div class="tech-item">
+            <span class="tech-index">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <div class="tech-tags">
+                {tags.map((tag, tagIndex) => (
+                  <span class:list={{ 'primary-tag': index === 0 && tagIndex === 0, 'soft-tag': index === 0 && tagIndex === 3 }}>{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="techcard-footer"><span><i></i> {copy.footer}</span><span>LET'S MAKE IT WORK <b>↗</b></span></div>
+    </div>
+  </div>
+</section>

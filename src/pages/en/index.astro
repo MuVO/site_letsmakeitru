@@ -2,6 +2,7 @@
 import { siteConfig } from '../../lib/siteConfig';
 import ContactDialog from '../../components/ContactDialog.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import TechStack from '../../components/TechStack.astro';
 const locale = 'en';
 const title = "DevOps and backend for business — Let's make IT";
 const description = 'DevOps, IT outsourcing and backend development for businesses. IT infrastructure support, API development and process automation. Commercial software development since 2005.';
@@ -50,21 +51,7 @@ const socialDescription = 'We support IT infrastructure, automate processes and 
       </div>
     </div></section>
 
-    <section class="techcard-section section" id="techcard"><div class="wrap">
-      <div class="techcard-heading"><div><div class="eyebrow"><span class="section-no">02</span> OUR TECHNICAL SNAPSHOT</div><h2>The technical foundation<br><span class="muted">for your business.</span></h2></div><p>We choose the right stack without unnecessary complexity, based on business needs and the product’s future growth.</p></div>
-      <div class="techcard">
-        <div class="techcard-aside"><div class="techcard-brand"><img src="../assets/logo.svg" alt=""><span>Let's make IT</span></div><div class="techcard-label">ENGINEERING<br>CAPABILITIES / 2026</div><div class="techcard-mantra">Contract. Code.<br>Delivery. Reliability.</div><span class="techcard-coords">54°N / 37°E</span></div>
-        <div class="techcard-main">
-          <div class="tech-item"><span class="tech-index">01</span><div><h3>Backend development</h3><p>Our core stack and team experience</p><div class="tech-tags"><span class="primary-tag">PHP</span><span>Laravel</span><span>Yii2</span><span class="soft-tag">Python · experience</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">02</span><div><h3>JavaScript / Node.js</h3><p>Frameworks and platforms</p><div class="tech-tags"><span>AdonisJS</span><span>Strapi</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">03</span><div><h3>Serverless</h3><p>Cloud functions</p><div class="tech-tags"><span>Yandex.Cloud</span><span>AWS Lambda</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">04</span><div><h3>Databases</h3><p>Chosen for your data and workload</p><div class="tech-tags"><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">05</span><div><h3>APIs and contracts</h3><p>Agree on the interface first</p><div class="tech-tags"><span class="primary-tag">Contract-first</span><span>OpenAPI</span><span>Swagger</span></div></div></div>
-          <div class="tech-item"><span class="tech-index">06</span><div><h3>Delivery and automation</h3><p>Repeatable builds and infrastructure</p><div class="tech-tags"><span>GitLab</span><span>GitLab CI</span><span>Ansible</span><span>Docker</span></div></div></div>
-        </div>
-        <div class="techcard-footer"><span><i></i> FROM COMMIT TO PRODUCTION</span><span>LET'S MAKE IT WORK <b>↗</b></span></div>
-      </div>
-    </div></section>
+    <TechStack locale={locale} />
 
     <section class="approach section" id="approach"><div class="wrap approach-layout"><div class="approach-intro"><div class="eyebrow"><span class="section-no">03</span> HOW WE WORK</div><h2>Clear for business.<br><span class="accent">Solid engineering.</span></h2><p>We agree on goals, milestones and ownership. You know what we’re doing and why; engineers know how to support and evolve it.</p><div class="experience-note"><span>Building commercial<br>software</span><b>since 2005</b></div></div><div class="steps"><article class="step"><span class="step-no">01</span><div><h3>Align on the goal</h3><p>We define the business outcome and how we’ll know the work has succeeded.</p></div><span class="step-arrow">↗</span></article><article class="step"><span class="step-no">02</span><div><h3>Map the way forward</h3><p>We break the work into clear phases, align on priorities and timelines, and explain options and trade-offs in plain language.</p></div><span class="step-arrow">↗</span></article><article class="step"><span class="step-no">03</span><div><h3>Deliver and support</h3><p>We implement and document the solution, then share knowledge so it remains manageable after launch.</p></div><span class="step-arrow">↗</span></article></div></div></section>
 
